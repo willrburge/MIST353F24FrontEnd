@@ -1,0 +1,35 @@
+﻿@page
+@model MIST353F24FrontEnd.Pages.searchModel
+@{
+}
+<input id="searchfld" placeholder="honda" class="form-check-control" />
+
+<button typeof+"button" onclick="searchManuf();" class="btn btn-primary" >Search</button>
+
+<div id="searchResultsDiv">
+
+
+</div>
+
+<script>
+    async function searchManuf() {
+        let pageNum = "2";
+        const carInfo = await fetch("https://vpic.nhtsa.dot.gov/api/vehicles/getallmanufacturers?format=json&page=${pageNum}")
+        const carInfoJson = await carInfo.json();
+
+        let searchTerms = document.getElementById("searchfld").value;
+
+        if (searchTerms == "honda") {
+            document.getElementById("searchResultsDiv").innerHTML = "Still working on it"
+        }
+        else if (searchTerms == "toyota") {
+            document.getElementById("searchResultsDiv").innerHTML = carInfoJson.Results[0].Mfr_Name;
+        }
+        else {
+            document.getElementById("searchResultsDiv").innerHTML = "ya stupid";
+        }
+
+        //document.getElementById("searchResultsDiv").innerHTML = "You searched for: " + searchTerms;
+
+    }
+</script>
